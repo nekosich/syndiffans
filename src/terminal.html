@@ -1,1 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Terminal - Syndicate OS</title>
+  <link rel="stylesheet" href="styles/terminal.css" />
+</head>
+<body>
+  <div id="terminal">
+    <div id="output"></div>
+    <div id="input-line">
+      <span class="prompt">agent@syn-core:~$</span>
+      <input type="text" id="commandInput" autocomplete="off" autofocus />
+      <span class="cursor">█</span>
+    </div>
+  </div>
+
+  <audio id="keystrokeSound" src="public/sounds/keystroke.wav" preload="auto"></audio>
+  <script src="scripts/terminal.js"></script>
+</body>
+</html>
 
