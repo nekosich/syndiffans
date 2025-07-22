@@ -1,1 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Syndicate Access</title>
+  <link rel="stylesheet" href="styles/login.css" />
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-box">
+      <h1 class="title">SYNDICATE CORE</h1>
+      <p class="subtitle">Enter access code to proceed:</p>
+      <input type="password" id="accessCode" autocomplete="off" autofocus />
+      <div id="error" class="error"></div>
+    </div>
+  </div>
+
+  <audio id="accessGranted" src="public/sounds/access-granted.wav" preload="auto"></audio>
+  <audio id="accessDenied" src="public/sounds/access-denied.wav" preload="auto"></audio>
+
+  <script src="scripts/login.js"></script>
+</body>
+</html>
 
