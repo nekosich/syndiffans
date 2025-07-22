@@ -1,1 +1,44 @@
+body {
+  background: black;
+  color: #ff5555;
+  font-family: 'Courier New', Courier, monospace;
+  margin: 0;
+  padding: 20px;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#terminal {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.prompt {
+  margin-right: 5px;
+  color: #ff5555;
+}
+
+#input-line {
+  display: flex;
+  align-items: center;
+}
+
+#commandInput {
+  background: black;
+  border: none;
+  color: #ff5555;
+  font: inherit;
+  width: 70%;
+  outline: none;
+}
+
+.cursor {
+  animation: blink 1s steps(1) infinite;
+  margin-left: 5px;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  50.01%, 100% { opacity: 0; }
+}
 
