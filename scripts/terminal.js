@@ -14,12 +14,9 @@ realInput.addEventListener('input', () => {
   typed.textContent = realInput.value;
 });
 
-realInput.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') {
-    const cmd = realInput.value.trim();
-    realInput.value = '';
-    typed.textContent = '';
-    playKeySound();
+realInput.addEventListener('input', () => {
+  typed.textContent = realInput.value;
+  playKeySound(); // 🔊 добавлено
     if (cmd) handleCommand(cmd);
   } else if (e.key === 'Backspace') {
     typed.textContent = typed.textContent.slice(0, -1);
