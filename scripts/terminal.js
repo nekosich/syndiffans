@@ -28,6 +28,24 @@ function handleCommand(cmd) {
   }
 }
 
+function typeOut(text, speed = 20) {
+  return new Promise(resolve => {
+    let i = 0;
+    const line = document.createElement('div');
+    output.appendChild(line);
+
+    const interval = setInterval(() => {
+      line.textContent += text[i];
+      i++;
+      if (i >= text.length) {
+        clearInterval(interval);
+        resolve();
+      }
+    }, speed);
+  });
+}
+
+
 // 🔄 Автофокус на поле ввода
 document.addEventListener('click', () => realInput.focus());
 realInput.focus();
