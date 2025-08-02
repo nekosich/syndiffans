@@ -21,6 +21,7 @@ body {
 #input-line {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 #commandInput {
@@ -32,9 +33,23 @@ body {
   outline: none;
 }
 
+#realInput {
+  position: absolute;
+  left: -9999px;
+}
+
+#typed {
+  white-space: pre-wrap;
+  color: #ff5555;
+}
+
 .cursor {
+  display: inline-block;
+  width: 10px;
   animation: blink 1s steps(1) infinite;
-  margin-left: 5px;
+  color: #ff5555;
+  margin-left: 1px;
+  transform: translateY(1px);
 }
 
 @keyframes blink {
