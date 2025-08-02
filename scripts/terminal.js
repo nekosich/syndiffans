@@ -6,27 +6,27 @@ const typed = document.getElementById('typed');
 const output = document.getElementById('output');
 const keystroke = document.getElementById('keystrokeSound');
 
-function printOutput(text) {
-  const line = document.createElement('div');
-  line.textContent = text;
-  output.appendChild(line);
-  window.scrollTo(0, document.body.scrollHeight);
+async function printOutput(text) {
+  for (let line of text.split('\n')) {
+    await typeOut(line);
+  }
 }
 
-function handleCommand(cmd) {
+async function handleCommand(cmd) {
   const parts = cmd.trim().split(/\s+/);
   const base = parts[0];
   const arg = parts.slice(1).join(" ");
 
-  printOutput(`agent@syn-core:~$ ${cmd}`);
+  await printOutput(`agent@syn-core:~$ ${cmd}`);
 
   if (commands[base]) {
     const result = commands[base](arg);
-    if (result) printOutput(result);
+    if (result) await printOutput(result);
   } else {
-    printOutput(`Unknown command: ${base}`);
+    await printOutput(`Unknown command: ${base}`);
   }
 }
+
 
 function playKeySound() {
   const s = document.getElementById('keystrokeSound').cloneNode();
