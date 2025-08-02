@@ -79,11 +79,16 @@ realInput.addEventListener('keydown', (e) => {
 (async function init() {
   await loadFileSystem();
 
-  const WELCOME_MSG = `
+const WELCOME_MSG = `
 Welcome, Agent.
 Access level: SYNDICATE // RED
 Type 'help' for list of commands.
 `;
+
+for (let line of WELCOME_MSG.trim().split('\n')) {
+  await typeOut(line, 30);
+}
+
 
   WELCOME_MSG.trim().split('\n').forEach(line => printOutput(line));
 })();
