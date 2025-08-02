@@ -3,22 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Terminal - Syndicate OS</title>
+  <title>Syndicate Terminal</title>
   <link rel="stylesheet" href="styles/terminal.css" />
 </head>
 <body>
   <div id="terminal">
-  <div id="output"></div>
-  <div id="input-line">
-    <span class="prompt">agent@syn-core:~$</span>
-    <span id="typed"></span><span class="cursor">█</span>
-    <input type="text" id="realInput" autocomplete="off" autofocus />
+    <div id="output"></div>
+    <div id="input-line">
+      <span class="prompt">agent@syn-core:~$</span>
+      <span id="typed"></span><span class="cursor">█</span>
+      <input type="text" id="realInput" autocomplete="off" />
+    </div>
   </div>
-</div>
 
+  <audio id="keystrokeSound" src="sounds/keystroke.wav" preload="auto"></audio>
 
-  <audio id="keystrokeSound" src="public/sounds/keystroke.wav" preload="auto"></audio>
-  <script src="scripts/terminal.js"></script>
+  <script type="module" src="scripts/terminal.js"></script>
 </body>
 </html>
 
