@@ -33,6 +33,9 @@ document.addEventListener('click', () => realInput.focus());
 realInput.focus();
 
 // 🎯 Слушаем текст и отображаем его вручную
+realInput.focus();
+document.addEventListener('click', () => realInput.focus());
+
 realInput.addEventListener('input', () => {
   typed.textContent = realInput.value;
 });
