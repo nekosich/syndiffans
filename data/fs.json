@@ -1,1 +1,28 @@
+{
+  "name": "/",
+  "type": "directory",
+  "children": [
+    {
+      "name": "agents",
+      "type": "directory",
+      "children": [
+        { "name": "alpha.txt", "type": "file", "content": "Agent ALPHA: status ACTIVE\nLocation: CLASSIFIED" },
+        { "name": "omega.enc", "type": "file", "content": "[ENCRYPTED]" }
+      ]
+    },
+    {
+      "name": "reports",
+      "type": "directory",
+      "children": [
+        { "name": "mission2033.crypt", "type": "file", "content": "[ENCRYPTED FILE: DECRYPT REQUIRED]" },
+        { "name": "breach.log", "type": "file", "content": "System breach detected at 03:14 UTC.\nResponse initiated." }
+      ]
+    },
+    {
+      "name": "plans",
+      "type": "directory",
+      "children": []
+    }
+  ]
+}
 
