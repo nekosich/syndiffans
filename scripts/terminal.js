@@ -1,43 +1,10 @@
-const input = document.getElementById('commandInput');
+import commands from './commands.js';
+import { loadFileSystem } from './fs.js';
+
+const realInput = document.getElementById('realInput');
+const typed = document.getElementById('typed');
 const output = document.getElementById('output');
 const keystroke = document.getElementById('keystrokeSound');
-
-const WELCOME_MSG = `
-Welcome, Agent.
-Access level: SYNDICATE // RED
-Type 'help' for list of commands.
-`;
-
-const commands = {
-  help: () => {
-    return `
-Available commands:
-- help
-- clear
-- shutdown
-- ls
-- cd [dir]
-- cat [file]
-`;
-  },
-  clear: () => {
-    output.innerHTML = '';
-    return '';
-  },
-  shutdown: () => {
-    window.location.href = "index.html";
-    return "Shutting down...";
-  },
-  ls: () => {
-    return "agents/ reports/ plans/";
-  },
-  cd: (arg) => {
-    return `Switched to directory: ${arg || '/'}`;
-  },
-  cat: (arg) => {
-    return `Reading file: ${arg || '[file]'}`;
-  }
-};
 
 function printOutput(text) {
   const line = document.createElement('div');
@@ -47,7 +14,7 @@ function printOutput(text) {
 }
 
 function handleCommand(cmd) {
-  const parts = cmd.split(" ");
+  const parts = cmd.trim().split(/\s+/);
   const base = parts[0];
   const arg = parts.slice(1).join(" ");
 
@@ -61,15 +28,37 @@ function handleCommand(cmd) {
   }
 }
 
-input.addEventListener('keydown', (e) => {
+// 🔄 Автофокус на поле ввода
+document.addEventListener('click', () => realInput.focus());
+realInput.focus();
+
+// 🎯 Слушаем текст и отображаем его вручную
+realInput.addEventListener('input', () => {
+  typed.textContent = realInput.value;
+});
+
+realInput.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') {
-    const command = input.value.trim();
-    input.value = '';
+    const command = realInput.value.trim();
+    realInput.value = '';
+    typed.textContent = '';
     keystroke.play();
     if (command) handleCommand(command);
+  } else if (e.key === 'Backspace') {
+    typed.textContent = typed.textContent.slice(0, -1);
   }
 });
 
-// Initial welcome message
-WELCOME_MSG.split('\n').forEach(line => printOutput(line));
+(async function init() {
+  await loadFileSystem();
+
+  const WELCOME_MSG = `
+Welcome, Agent.
+Access level: SYNDICATE // RED
+Type 'help' for list of commands.
+`;
+
+  WELCOME_MSG.trim().split('\n').forEach(line => printOutput(line));
+})();
+
 
