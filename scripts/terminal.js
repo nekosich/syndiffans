@@ -28,14 +28,19 @@ function handleCommand(cmd) {
   }
 }
 
+function playKeySound() {
+  const s = document.getElementById('keystrokeSound').cloneNode();
+  s.play();
+}
+
 function typeOut(text, speed = 20) {
   return new Promise(resolve => {
-    let i = 0;
     const line = document.createElement('div');
     output.appendChild(line);
-
+    let i = 0;
     const interval = setInterval(() => {
       line.textContent += text[i];
+      playKeySound();
       i++;
       if (i >= text.length) {
         clearInterval(interval);
@@ -44,6 +49,7 @@ function typeOut(text, speed = 20) {
     }, speed);
   });
 }
+
 
 
 // 🔄 Автофокус на поле ввода
