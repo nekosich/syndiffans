@@ -1,74 +1,197 @@
-* {
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+
+body {
+  background: linear-gradient(135deg, #000000 0%, #1a0a0a 50%, #000000 100%);
+  color: #00ff41;
+  font-family: 'Orbitron', 'Courier New', monospace;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-}
-
-body, html {
-  height: 100%;
-  background: black;
-  font-family: 'Courier New', Courier, monospace;
-  color: #ff5555;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* VHS эффекты */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 255, 65, 0.03) 2px,
+    rgba(0, 255, 65, 0.03) 4px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(0, 255, 65, 0.1) 50%,
+    transparent 100%
+  );
+  animation: scanline 8s linear infinite;
+  pointer-events: none;
+  z-index: 2;
+}
+
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
 }
 
 .login-container {
-  width: 100%;
-  max-width: 500px;
+  position: relative;
+  z-index: 3;
   text-align: center;
-  animation: fadeIn 2s ease-in;
+  animation: flicker 0.15s infinite linear;
+}
+
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.98; }
 }
 
 .login-box {
-  border: 1px solid #ff5555;
-  padding: 30px;
   background: rgba(0, 0, 0, 0.8);
-  box-shadow: 0 0 10px #ff5555;
+  border: 2px solid #00ff41;
+  border-radius: 10px;
+  padding: 40px;
+  box-shadow: 
+    0 0 20px rgba(0, 255, 65, 0.3),
+    inset 0 0 20px rgba(0, 255, 65, 0.1);
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+
+.login-box::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #00ff41, #008f2a, #00ff41);
+  border-radius: 12px;
+  z-index: -1;
+  animation: borderGlow 3s ease-in-out infinite;
+}
+
+@keyframes borderGlow {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
 }
 
 .title {
-  font-size: 2em;
+  font-size: 2.5em;
+  font-weight: 900;
   margin-bottom: 20px;
-  text-shadow: 0 0 10px #ff0000;
+  color: #ff5555;
+  text-shadow: 
+    0 0 20px rgba(255, 85, 85, 0.8),
+    0 0 40px rgba(255, 85, 85, 0.4);
+  animation: titlePulse 2s ease-in-out infinite;
+  letter-spacing: 3px;
+}
+
+@keyframes titlePulse {
+  0%, 100% { 
+    text-shadow: 0 0 20px rgba(255, 85, 85, 0.8), 0 0 40px rgba(255, 85, 85, 0.4);
+  }
+  50% { 
+    text-shadow: 0 0 30px rgba(255, 85, 85, 1), 0 0 60px rgba(255, 85, 85, 0.6);
+  }
 }
 
 .subtitle {
-  margin-bottom: 15px;
-  font-size: 1em;
-  color: #ff9999;
+  font-size: 1.2em;
+  margin-bottom: 30px;
+  color: #00ff41;
+  text-shadow: 0 0 10px rgba(0, 255, 65, 0.6);
+  animation: glow 2s ease-in-out infinite alternate;
 }
 
-input {
-  width: 80%;
-  padding: 10px;
-  font-size: 1em;
-  background: black;
-  border: 1px solid #ff5555;
-  color: #ff5555;
+@keyframes glow {
+  from { text-shadow: 0 0 10px rgba(0, 255, 65, 0.6); }
+  to { text-shadow: 0 0 15px rgba(0, 255, 65, 0.8), 0 0 25px rgba(0, 255, 65, 0.4); }
+}
+
+#accessCode {
+  width: 300px;
+  padding: 15px;
+  font-size: 1.1em;
+  background: rgba(0, 0, 0, 0.7);
+  border: 2px solid #00ff41;
+  border-radius: 5px;
+  color: #00ff41;
+  font-family: 'Orbitron', monospace;
   text-align: center;
+  letter-spacing: 2px;
   outline: none;
-  box-shadow: 0 0 5px #ff5555;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 15px rgba(0, 255, 65, 0.3);
+}
+
+#accessCode:focus {
+  border-color: #ff5555;
+  box-shadow: 
+    0 0 20px rgba(255, 85, 85, 0.5),
+    0 0 40px rgba(255, 85, 85, 0.2);
+  transform: scale(1.02);
+}
+
+#accessCode::placeholder {
+  color: rgba(0, 255, 65, 0.5);
+  text-shadow: none;
 }
 
 .error {
-  margin-top: 10px;
-  color: #ff2222;
-  font-size: 0.9em;
-  animation: shake 0.3s;
+  margin-top: 20px;
+  color: #ff5555;
+  font-size: 1.1em;
+  font-weight: 700;
+  text-shadow: 0 0 15px rgba(255, 85, 85, 0.8);
+  animation: errorShake 0.5s ease-in-out;
+  min-height: 20px;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes shake {
-  0% { transform: translateX(0); }
+@keyframes errorShake {
+  0%, 100% { transform: translateX(0); }
   25% { transform: translateX(-5px); }
-  50% { transform: translateX(5px); }
-  75% { transform: translateX(-5px); }
-  100% { transform: translateX(0); }
+  75% { transform: translateX(5px); }
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .login-box {
+    padding: 30px 20px;
+    margin: 20px;
+  }
+  
+  .title {
+    font-size: 2em;
+  }
+  
+  #accessCode {
+    width: 250px;
+    font-size: 1em;
+  }
 }
 

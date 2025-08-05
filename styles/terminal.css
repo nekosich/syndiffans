@@ -1,32 +1,118 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+
 body {
-  background: black;
-  color: #ff5555;
-  font-family: 'Courier New', Courier, monospace;
+  background: linear-gradient(135deg, #000000 0%, #1a0a0a 50%, #000000 100%);
+  color: #00ff41;
+  font-family: 'Orbitron', 'Courier New', monospace;
   margin: 0;
   padding: 20px;
   height: 100vh;
   overflow: hidden;
+  position: relative;
+}
+
+/* VHS эффекты */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 255, 65, 0.03) 2px,
+    rgba(0, 255, 65, 0.03) 4px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(0, 255, 65, 0.1) 50%,
+    transparent 100%
+  );
+  animation: scanline 8s linear infinite;
+  pointer-events: none;
+  z-index: 2;
+}
+
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
 }
 
 #terminal {
   height: 100%;
   overflow-y: auto;
+  position: relative;
+  z-index: 3;
+  text-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+  animation: flicker 0.15s infinite linear;
+}
+
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.98; }
 }
 
 .prompt {
   margin-right: 5px;
   color: #ff5555;
+  text-shadow: 0 0 15px rgba(255, 85, 85, 0.8);
+  font-weight: 700;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
 }
 
 #input-line {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  position: relative;
+}
+
+#input-line::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, #00ff41, transparent);
+  animation: typing 1s ease-in-out infinite;
+}
+
+@keyframes typing {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
 }
 
 #typed {
   white-space: pre-wrap;
-  color: #ff5555;
+  color: #00ff41;
+  text-shadow: 0 0 8px rgba(0, 255, 65, 0.6);
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from { text-shadow: 0 0 8px rgba(0, 255, 65, 0.6); }
+  to { text-shadow: 0 0 12px rgba(0, 255, 65, 0.8), 0 0 20px rgba(0, 255, 65, 0.4); }
 }
 
 #realInput {
@@ -37,14 +123,80 @@ body {
 .cursor {
   display: inline-block;
   width: 10px;
-  animation: blink 1s steps(1) infinite;
-  color: #ff5555;
+  animation: blink 1s steps(1) infinite, cursorGlow 2s ease-in-out infinite;
+  color: #00ff41;
   margin-left: 1px;
   transform: translateY(1px);
+  text-shadow: 0 0 10px rgba(0, 255, 65, 0.8);
 }
 
 @keyframes blink {
   0%, 50% { opacity: 1; }
   50.01%, 100% { opacity: 0; }
+}
+
+@keyframes cursorGlow {
+  0%, 100% { text-shadow: 0 0 10px rgba(0, 255, 65, 0.8); }
+  50% { text-shadow: 0 0 20px rgba(0, 255, 65, 1), 0 0 30px rgba(0, 255, 65, 0.6); }
+}
+
+/* Стили для вывода команд */
+#output div {
+  margin: 2px 0;
+  padding: 1px 0;
+  border-left: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+#output div:hover {
+  border-left-color: #00ff41;
+  background: rgba(0, 255, 65, 0.05);
+  padding-left: 5px;
+}
+
+/* Глитч эффекты */
+.glitch {
+  animation: glitch 0.3s ease-in-out;
+}
+
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+
+/* Скроллбар */
+#terminal::-webkit-scrollbar {
+  width: 8px;
+}
+
+#terminal::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+}
+
+#terminal::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #00ff41, #008f2a);
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+}
+
+#terminal::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #00ff88, #00ff41);
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  body {
+    padding: 10px;
+    font-size: 14px;
+  }
+  
+  .prompt {
+    font-size: 12px;
+  }
 }
 
