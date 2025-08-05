@@ -1,49 +1,109 @@
-/* Дополнительные VHS эффекты */
+/* VHS эффекты для терминала */
 
-/* Эффект старого монитора */
-.crt-effect {
-  position: relative;
-  overflow: hidden;
+/* Сканирующие линии */
+.scanline {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+  animation: scanlineMove 3s linear infinite;
+  pointer-events: none;
+  z-index: 6;
 }
 
-.crt-effect::before {
-  content: '';
+@keyframes scanlineMove {
+  0% { transform: translateY(-100vh); }
+  100% { transform: translateY(100vh); }
+}
+
+/* Эффект искажения цвета */
+.color-distortion {
+  animation: colorDistort 0.5s ease-in-out;
+}
+
+@keyframes colorDistort {
+  0% { filter: hue-rotate(0deg); }
+  25% { filter: hue-rotate(90deg) saturate(1.5); }
+  50% { filter: hue-rotate(180deg) saturate(2); }
+  75% { filter: hue-rotate(270deg) saturate(1.5); }
+  100% { filter: hue-rotate(360deg); }
+}
+
+/* Эффект мерцания экрана */
+.screen-flicker {
+  animation: screenFlicker 0.1s ease-in-out;
+}
+
+@keyframes screenFlicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+/* Эффект глитча текста */
+.text-glitch {
+  position: relative;
+  animation: textGlitch 0.3s ease-in-out;
+}
+
+.text-glitch::before,
+.text-glitch::after {
+  content: attr(data-text);
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    transparent 50%,
-    rgba(0, 255, 65, 0.02) 50%
-  );
-  background-size: 100% 4px;
-  pointer-events: none;
-  z-index: 1;
 }
 
-/* Эффект помех */
-.noise-effect {
-  position: relative;
+.text-glitch::before {
+  animation: glitch-1 0.3s ease-in-out infinite alternate-reverse;
+  color: #ff0000;
+  z-index: -1;
 }
 
-.noise-effect::after {
-  content: '';
-  position: absolute;
+.text-glitch::after {
+  animation: glitch-2 0.3s ease-in-out infinite alternate-reverse;
+  color: #00ffff;
+  z-index: -2;
+}
+
+@keyframes glitch-1 {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+
+@keyframes glitch-2 {
+  0% { transform: translate(0); }
+  20% { transform: translate(2px, -2px); }
+  40% { transform: translate(2px, 2px); }
+  60% { transform: translate(-2px, -2px); }
+  80% { transform: translate(-2px, 2px); }
+  100% { transform: translate(0); }
+}
+
+/* Эффект статики */
+.static-effect {
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   background-image: 
-    radial-gradient(circle at 25% 25%, rgba(0, 255, 65, 0.1) 1px, transparent 1px),
-    radial-gradient(circle at 75% 75%, rgba(0, 255, 65, 0.1) 1px, transparent 1px);
-  background-size: 20px 20px;
-  animation: noise 0.5s infinite;
+    radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+  animation: staticNoise 0.1s linear infinite;
   pointer-events: none;
-  z-index: 2;
+  z-index: 7;
+  opacity: 0.3;
 }
 
-@keyframes noise {
+@keyframes staticNoise {
   0%, 100% { transform: translate(0, 0); }
   10% { transform: translate(-1px, -1px); }
   20% { transform: translate(1px, -1px); }
@@ -56,180 +116,225 @@
   90% { transform: translate(-1px, -1px); }
 }
 
-/* Эффект искажения */
-.distortion-effect {
-  animation: distortion 0.3s ease-in-out;
+/* Эффект тряски экрана */
+.screen-shake {
+  animation: screenShake 0.5s ease-in-out;
 }
 
-@keyframes distortion {
+@keyframes screenShake {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-2px, -2px); }
+  20% { transform: translate(2px, -2px); }
+  30% { transform: translate(-2px, 2px); }
+  40% { transform: translate(2px, 2px); }
+  50% { transform: translate(-1px, -1px); }
+  60% { transform: translate(1px, -1px); }
+  70% { transform: translate(-1px, 1px); }
+  80% { transform: translate(1px, 1px); }
+  90% { transform: translate(0, 0); }
+}
+
+/* Эффект искажения текста */
+.text-distortion {
+  animation: textDistort 0.2s ease-in-out;
+}
+
+@keyframes textDistort {
   0% { transform: skew(0deg); }
-  25% { transform: skew(1deg); }
-  50% { transform: skew(-1deg); }
-  75% { transform: skew(0.5deg); }
+  25% { transform: skew(1deg, 0deg); }
+  50% { transform: skew(-1deg, 0deg); }
+  75% { transform: skew(0.5deg, 0.5deg); }
   100% { transform: skew(0deg); }
 }
 
-/* Эффект мерцания текста */
-.text-flicker {
-  animation: textFlicker 0.1s infinite;
+/* Эффект пульсации */
+.pulse-effect {
+  animation: pulse 2s ease-in-out infinite;
 }
 
-@keyframes textFlicker {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.8; }
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.02); }
+}
+
+/* Эффект свечения */
+.glow-effect {
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from { 
+    text-shadow: 0 0 8px var(--primary-color), 0 0 16px var(--primary-color);
+  }
+  to { 
+    text-shadow: 0 0 12px var(--primary-color), 0 0 24px var(--primary-color), 0 0 32px var(--primary-color);
+  }
+}
+
+/* Эффект матрицы */
+.matrix-effect {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent 0%, rgba(0, 255, 0, 0.1) 50%, transparent 100%);
+  animation: matrixRain 3s linear infinite;
+  pointer-events: none;
+  z-index: 8;
+}
+
+@keyframes matrixRain {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+/* Эффект взрыва */
+.explosion-effect {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: radial-gradient(circle, var(--primary-color) 0%, transparent 70%);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: explosion 0.5s ease-out;
+  pointer-events: none;
+  z-index: 9;
+}
+
+@keyframes explosion {
+  0% { 
+    width: 0; 
+    height: 0; 
+    opacity: 1; 
+  }
+  100% { 
+    width: 200px; 
+    height: 200px; 
+    opacity: 0; 
+  }
 }
 
 /* Эффект загрузки */
 .loading-effect {
-  position: relative;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--primary-color);
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: spin 1s linear infinite;
 }
 
-.loading-effect::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, #00ff41, transparent);
-  animation: loading 2s linear infinite;
-}
-
-@keyframes loading {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 /* Эффект печатающей машинки */
 .typewriter {
   overflow: hidden;
-  border-right: 2px solid #00ff41;
+  border-right: 2px solid var(--primary-color);
   white-space: nowrap;
-  animation: typewriter 3s steps(40, end), blink-caret 0.75s step-end infinite;
+  animation: typing 3s steps(40, end), blink-caret 0.75s step-end infinite;
 }
 
-@keyframes typewriter {
+@keyframes typing {
   from { width: 0; }
   to { width: 100%; }
 }
 
 @keyframes blink-caret {
   from, to { border-color: transparent; }
-  50% { border-color: #00ff41; }
+  50% { border-color: var(--primary-color); }
 }
 
-/* Эффект неонового свечения */
-.neon-glow {
-  text-shadow: 
-    0 0 5px #00ff41,
-    0 0 10px #00ff41,
-    0 0 15px #00ff41,
-    0 0 20px #00ff41;
-  animation: neonPulse 2s ease-in-out infinite alternate;
-}
-
-@keyframes neonPulse {
-  from {
-    text-shadow: 
-      0 0 5px #00ff41,
-      0 0 10px #00ff41,
-      0 0 15px #00ff41,
-      0 0 20px #00ff41;
-  }
-  to {
-    text-shadow: 
-      0 0 2px #00ff41,
-      0 0 5px #00ff41,
-      0 0 8px #00ff41,
-      0 0 12px #00ff41;
-  }
-}
-
-/* Эффект матрицы */
-.matrix-effect {
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(0, 255, 65, 0.1) 50%,
-    transparent 100%
-  );
-  animation: matrix 3s linear infinite;
-}
-
-@keyframes matrix {
-  0% { transform: translateY(-100%); }
-  100% { transform: translateY(100vh); }
-}
-
-/* Эффект взлома */
-.hack-effect {
-  animation: hack 0.5s ease-in-out;
-}
-
-@keyframes hack {
-  0% { filter: hue-rotate(0deg); }
-  25% { filter: hue-rotate(90deg); }
-  50% { filter: hue-rotate(180deg); }
-  75% { filter: hue-rotate(270deg); }
-  100% { filter: hue-rotate(360deg); }
-}
-
-/* Эффект старого телевизора */
-.tv-effect {
+/* Эффект голограммы */
+.hologram-effect {
   position: relative;
+  color: var(--primary-color);
+  text-shadow: 
+    0 0 5px var(--primary-color),
+    0 0 10px var(--primary-color),
+    0 0 15px var(--primary-color);
+  animation: hologram 2s ease-in-out infinite alternate;
 }
 
-.tv-effect::before {
+@keyframes hologram {
+  0% { 
+    opacity: 1; 
+    transform: translateY(0px);
+  }
+  100% { 
+    opacity: 0.7; 
+    transform: translateY(-2px);
+  }
+}
+
+/* Эффект неоновой вывески */
+.neon-sign {
+  color: var(--primary-color);
+  text-shadow: 
+    0 0 5px var(--primary-color),
+    0 0 10px var(--primary-color),
+    0 0 15px var(--primary-color),
+    0 0 20px var(--primary-color),
+    0 0 35px var(--primary-color),
+    0 0 40px var(--primary-color);
+  animation: neonFlicker 1.5s infinite alternate;
+}
+
+@keyframes neonFlicker {
+  0%, 18%, 22%, 25%, 53%, 57%, 100% {
+    text-shadow: 
+      0 0 5px var(--primary-color),
+      0 0 10px var(--primary-color),
+      0 0 15px var(--primary-color),
+      0 0 20px var(--primary-color),
+      0 0 35px var(--primary-color),
+      0 0 40px var(--primary-color);
+  }
+  20%, 24%, 55% {
+    text-shadow: none;
+  }
+}
+
+/* Эффект киберпанка */
+.cyberpunk-effect {
+  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+  background-size: 200% 200%;
+  animation: cyberpunkGradient 3s ease infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@keyframes cyberpunkGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Эффект ретро-волн */
+.retro-wave {
+  position: relative;
+  overflow: hidden;
+}
+
+.retro-wave::before {
   content: '';
   position: absolute;
   top: 0;
-  left: 0;
+  left: -100%;
   width: 100%;
   height: 100%;
-  background: 
-    radial-gradient(circle at 20% 50%, rgba(0, 255, 65, 0.1) 1px, transparent 1px),
-    radial-gradient(circle at 80% 20%, rgba(0, 255, 65, 0.1) 1px, transparent 1px),
-    radial-gradient(circle at 40% 80%, rgba(0, 255, 65, 0.1) 1px, transparent 1px);
-  background-size: 50px 50px, 30px 30px, 40px 40px;
-  animation: tvStatic 0.2s infinite;
-  pointer-events: none;
-  z-index: 1;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  animation: retroWave 2s linear infinite;
 }
 
-@keyframes tvStatic {
-  0%, 100% { opacity: 0.1; }
-  50% { opacity: 0.3; }
-}
-
-/* Эффект синхронизации */
-.sync-effect {
-  animation: sync 0.5s ease-in-out;
-}
-
-@keyframes sync {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.02); }
-  100% { transform: scale(1); }
-}
-
-/* Эффект ошибки */
-.error-effect {
-  animation: error 0.3s ease-in-out;
-}
-
-@keyframes error {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  75% { transform: translateX(5px); }
-}
-
-/* Эффект успеха */
-.success-effect {
-  animation: success 0.5s ease-in-out;
-}
-
-@keyframes success {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
+@keyframes retroWave {
+  0% { left: -100%; }
+  100% { left: 100%; }
 }

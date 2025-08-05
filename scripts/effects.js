@@ -4,106 +4,245 @@ export class VHSEffects {
   constructor() {
     this.isActive = false;
     this.effects = [];
+    this.currentEffects = new Set();
   }
 
   // Эффект сканирующей линии
   addScanline() {
     const scanline = document.createElement('div');
-    scanline.style.cssText = `
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, #00ff41, transparent);
-      z-index: 1000;
-      pointer-events: none;
-      animation: scanlineMove 0.1s linear;
-    `;
-    
+    scanline.className = 'scanline';
     document.body.appendChild(scanline);
     
     setTimeout(() => {
-      document.body.removeChild(scanline);
-    }, 100);
+      if (scanline.parentNode) {
+        document.body.removeChild(scanline);
+      }
+    }, 3000);
   }
 
   // Эффект глитча текста
   addTextGlitch(element) {
-    const originalText = element.textContent;
-    const glitchChars = '!@#$%^&*()_+-=[]{}|;:,.<>?';
+    if (!element) return;
     
-    let glitchCount = 0;
-    const glitchInterval = setInterval(() => {
-      const randomChar = glitchChars[Math.floor(Math.random() * glitchChars.length)];
-      const randomIndex = Math.floor(Math.random() * originalText.length);
-      
-      let newText = originalText.split('');
-      newText[randomIndex] = randomChar;
-      element.textContent = newText.join('');
-      
-      glitchCount++;
-      if (glitchCount > 5) {
-        clearInterval(glitchInterval);
-        element.textContent = originalText;
-      }
-    }, 50);
+    const originalText = element.textContent;
+    element.setAttribute('data-text', originalText);
+    element.classList.add('text-glitch');
+    
+    setTimeout(() => {
+      element.classList.remove('text-glitch');
+      element.removeAttribute('data-text');
+    }, 300);
   }
 
   // Эффект мерцания экрана
   addScreenFlicker() {
-    const overlay = document.createElement('div');
-    overlay.style.cssText = `
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 255, 65, 0.1);
-      z-index: 999;
-      pointer-events: none;
-      animation: flickerEffect 0.05s ease-out;
-    `;
-    
-    document.body.appendChild(overlay);
-    
+    document.body.classList.add('screen-flicker');
     setTimeout(() => {
-      document.body.removeChild(overlay);
-    }, 50);
+      document.body.classList.remove('screen-flicker');
+    }, 100);
   }
 
   // Эффект искажения цвета
   addColorDistortion() {
-    document.body.style.filter = 'hue-rotate(180deg) saturate(1.5)';
+    document.body.classList.add('color-distortion');
     setTimeout(() => {
-      document.body.style.filter = 'none';
-    }, 200);
+      document.body.classList.remove('color-distortion');
+    }, 500);
   }
 
   // Эффект статики
   addStatic() {
-    const staticOverlay = document.createElement('div');
-    staticOverlay.style.cssText = `
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: 
-        radial-gradient(circle at 20% 50%, rgba(0, 255, 65, 0.1) 1px, transparent 1px),
-        radial-gradient(circle at 80% 20%, rgba(0, 255, 65, 0.1) 1px, transparent 1px),
-        radial-gradient(circle at 40% 80%, rgba(0, 255, 65, 0.1) 1px, transparent 1px);
-      background-size: 50px 50px, 30px 30px, 40px 40px;
-      z-index: 998;
-      pointer-events: none;
-      animation: staticEffect 0.2s ease-out;
-    `;
-    
-    document.body.appendChild(staticOverlay);
+    const staticEffect = document.createElement('div');
+    staticEffect.className = 'static-effect';
+    document.body.appendChild(staticEffect);
     
     setTimeout(() => {
-      document.body.removeChild(staticOverlay);
+      if (staticEffect.parentNode) {
+        document.body.removeChild(staticEffect);
+      }
     }, 200);
+  }
+
+  // Эффект тряски экрана
+  addScreenShake() {
+    document.body.classList.add('screen-shake');
+    setTimeout(() => {
+      document.body.classList.remove('screen-shake');
+    }, 500);
+  }
+
+  // Эффект искажения текста
+  addTextDistortion(element) {
+    if (!element) return;
+    
+    element.classList.add('text-distortion');
+    setTimeout(() => {
+      element.classList.remove('text-distortion');
+    }, 200);
+  }
+
+  // Эффект пульсации
+  addPulseEffect(element) {
+    if (!element) return;
+    
+    element.classList.add('pulse-effect');
+    setTimeout(() => {
+      element.classList.remove('pulse-effect');
+    }, 2000);
+  }
+
+  // Эффект свечения
+  addGlowEffect(element) {
+    if (!element) return;
+    
+    element.classList.add('glow-effect');
+    setTimeout(() => {
+      element.classList.remove('glow-effect');
+    }, 2000);
+  }
+
+  // Эффект матрицы
+  addMatrixEffect() {
+    const matrixEffect = document.createElement('div');
+    matrixEffect.className = 'matrix-effect';
+    document.body.appendChild(matrixEffect);
+    
+    setTimeout(() => {
+      if (matrixEffect.parentNode) {
+        document.body.removeChild(matrixEffect);
+      }
+    }, 3000);
+  }
+
+  // Эффект взрыва
+  addExplosionEffect() {
+    const explosion = document.createElement('div');
+    explosion.className = 'explosion-effect';
+    document.body.appendChild(explosion);
+    
+    setTimeout(() => {
+      if (explosion.parentNode) {
+        document.body.removeChild(explosion);
+      }
+    }, 500);
+  }
+
+  // Эффект голограммы
+  addHologramEffect(element) {
+    if (!element) return;
+    
+    element.classList.add('hologram-effect');
+    setTimeout(() => {
+      element.classList.remove('hologram-effect');
+    }, 2000);
+  }
+
+  // Эффект неоновой вывески
+  addNeonSignEffect(element) {
+    if (!element) return;
+    
+    element.classList.add('neon-sign');
+    setTimeout(() => {
+      element.classList.remove('neon-sign');
+    }, 1500);
+  }
+
+  // Эффект киберпанка
+  addCyberpunkEffect(element) {
+    if (!element) return;
+    
+    element.classList.add('cyberpunk-effect');
+    setTimeout(() => {
+      element.classList.remove('cyberpunk-effect');
+    }, 3000);
+  }
+
+  // Эффект ретро-волн
+  addRetroWaveEffect(element) {
+    if (!element) return;
+    
+    element.classList.add('retro-wave');
+    setTimeout(() => {
+      element.classList.remove('retro-wave');
+    }, 2000);
+  }
+
+  // Эффект печатающей машинки
+  addTypewriterEffect(element) {
+    if (!element) return;
+    
+    element.classList.add('typewriter');
+    setTimeout(() => {
+      element.classList.remove('typewriter');
+    }, 3000);
+  }
+
+  // Комбинированный эффект взлома
+  addHackEffect() {
+    this.addScreenShake();
+    this.addColorDistortion();
+    this.addStatic();
+    this.addMatrixEffect();
+    
+    // Глитчи на всех элементах терминала
+    const elements = document.querySelectorAll('#output div');
+    elements.forEach((el, index) => {
+      setTimeout(() => {
+        this.addTextGlitch(el);
+        this.addTextDistortion(el);
+      }, index * 50);
+    });
+  }
+
+  // Эффект вирусного заражения
+  addViralEffect() {
+    this.addScreenShake();
+    this.addExplosionEffect();
+    
+    // Постепенное заражение элементов
+    const elements = document.querySelectorAll('#output div');
+    elements.forEach((el, index) => {
+      setTimeout(() => {
+        el.style.color = '#ff0000';
+        this.addTextGlitch(el);
+        this.addPulseEffect(el);
+      }, index * 100);
+    });
+    
+    // Восстановление через 3 секунды
+    setTimeout(() => {
+      elements.forEach(el => {
+        el.style.color = '';
+      });
+    }, 3000);
+  }
+
+  // Эффект успешного взлома
+  addSuccessEffect() {
+    this.addGlowEffect(document.body);
+    this.addPulseEffect(document.body);
+    
+    // Создаем эффект успеха
+    const successMessage = document.createElement('div');
+    successMessage.textContent = 'ACCESS GRANTED';
+    successMessage.style.cssText = `
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: var(--primary-color);
+      font-size: 2em;
+      font-weight: bold;
+      z-index: 1000;
+      text-shadow: 0 0 20px var(--primary-color);
+    `;
+    document.body.appendChild(successMessage);
+    
+    setTimeout(() => {
+      if (successMessage.parentNode) {
+        document.body.removeChild(successMessage);
+      }
+    }, 2000);
   }
 
   // Случайные эффекты
@@ -112,7 +251,9 @@ export class VHSEffects {
       () => this.addScanline(),
       () => this.addScreenFlicker(),
       () => this.addColorDistortion(),
-      () => this.addStatic()
+      () => this.addStatic(),
+      () => this.addMatrixEffect(),
+      () => this.addExplosionEffect()
     ];
     
     const randomEffect = effects[Math.floor(Math.random() * effects.length)];
@@ -125,7 +266,7 @@ export class VHSEffects {
     this.isActive = true;
     
     setInterval(() => {
-      if (Math.random() < 0.02) { // 2% шанс каждые 100мс
+      if (Math.random() < 0.01) { // 1% шанс каждые 100мс
         this.addRandomEffect();
       }
     }, 100);
@@ -134,6 +275,16 @@ export class VHSEffects {
   // Остановка автоматических эффектов
   stopAutoEffects() {
     this.isActive = false;
+  }
+
+  // Очистка всех активных эффектов
+  clearAllEffects() {
+    this.currentEffects.forEach(effect => {
+      if (effect.parentNode) {
+        effect.parentNode.removeChild(effect);
+      }
+    });
+    this.currentEffects.clear();
   }
 }
 
