@@ -1,11 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
 
+:root {
+  --primary-color: #00ff41;
+  --secondary-color: #ff5555;
+  --background: #000000;
+  --terminal-height: 100vh;
+  --terminal-padding: 20px;
+}
+
 body {
   background: linear-gradient(135deg, #000000 0%, #1a0a0a 50%, #000000 100%);
-  color: #00ff41;
+  color: var(--primary-color);
   font-family: 'Orbitron', 'Courier New', monospace;
   margin: 0;
-  padding: 20px;
+  padding: 0;
   height: 100vh;
   overflow: hidden;
   position: relative;
@@ -54,8 +62,12 @@ body::after {
 }
 
 #terminal {
-  height: 100%;
-  overflow-y: auto;
+  height: 100vh;
+  width: 100%;
+  padding: var(--terminal-padding);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
   position: relative;
   z-index: 3;
   text-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
@@ -67,17 +79,13 @@ body::after {
   50% { opacity: 0.98; }
 }
 
-.prompt {
-  margin-right: 5px;
-  color: #ff5555;
-  text-shadow: 0 0 15px rgba(255, 85, 85, 0.8);
-  font-weight: 700;
-  animation: pulse 2s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.7; }
+#output {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin-bottom: 10px;
+  padding-right: 10px;
+  scroll-behavior: smooth;
 }
 
 #input-line {
@@ -85,6 +93,8 @@ body::after {
   align-items: center;
   flex-wrap: wrap;
   position: relative;
+  min-height: 30px;
+  flex-shrink: 0;
 }
 
 #input-line::before {
@@ -103,11 +113,27 @@ body::after {
   50% { opacity: 1; }
 }
 
+.prompt {
+  margin-right: 5px;
+  color: var(--secondary-color);
+  text-shadow: 0 0 15px rgba(255, 85, 85, 0.8);
+  font-weight: 700;
+  animation: pulse 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
 #typed {
   white-space: pre-wrap;
-  color: #00ff41;
+  color: var(--primary-color);
   text-shadow: 0 0 8px rgba(0, 255, 65, 0.6);
   animation: glow 2s ease-in-out infinite alternate;
+  flex: 1;
+  min-width: 0;
 }
 
 @keyframes glow {
@@ -124,10 +150,11 @@ body::after {
   display: inline-block;
   width: 10px;
   animation: blink 1s steps(1) infinite, cursorGlow 2s ease-in-out infinite;
-  color: #00ff41;
+  color: var(--primary-color);
   margin-left: 1px;
   transform: translateY(1px);
   text-shadow: 0 0 10px rgba(0, 255, 65, 0.8);
+  flex-shrink: 0;
 }
 
 @keyframes blink {
@@ -146,10 +173,12 @@ body::after {
   padding: 1px 0;
   border-left: 2px solid transparent;
   transition: all 0.3s ease;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 #output div:hover {
-  border-left-color: #00ff41;
+  border-left-color: var(--primary-color);
   background: rgba(0, 255, 65, 0.05);
   padding-left: 5px;
 }
@@ -169,34 +198,132 @@ body::after {
 }
 
 /* Скроллбар */
-#terminal::-webkit-scrollbar {
+#output::-webkit-scrollbar {
   width: 8px;
 }
 
-#terminal::-webkit-scrollbar-track {
+#output::-webkit-scrollbar-track {
   background: rgba(0, 0, 0, 0.3);
   border-radius: 4px;
 }
 
-#terminal::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #00ff41, #008f2a);
+#output::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--primary-color), #008f2a);
   border-radius: 4px;
   box-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
 }
 
-#terminal::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #00ff88, #00ff41);
+#output::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #00ff88, var(--primary-color));
 }
 
 /* Адаптивность */
 @media (max-width: 768px) {
+  :root {
+    --terminal-padding: 10px;
+  }
+  
   body {
-    padding: 10px;
     font-size: 14px;
   }
   
   .prompt {
     font-size: 12px;
   }
+  
+  #input-line {
+    min-height: 25px;
+  }
+}
+
+/* Новые эффекты для вайбового терминала */
+.terminal-physical {
+  position: relative;
+  border: 2px solid var(--primary-color);
+  border-radius: 8px;
+  box-shadow: 
+    0 0 20px rgba(0, 255, 65, 0.3),
+    inset 0 0 20px rgba(0, 255, 65, 0.1);
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(0, 255, 65, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(0, 255, 65, 0.05) 0%, transparent 50%);
+}
+
+.terminal-physical::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    linear-gradient(45deg, transparent 30%, rgba(0, 255, 65, 0.1) 50%, transparent 70%);
+  animation: scanEffect 3s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes scanEffect {
+  0% { transform: translateX(-100%) translateY(-100%); }
+  100% { transform: translateX(100%) translateY(100%); }
+}
+
+/* Эффект статики */
+.static-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+  animation: staticNoise 0.1s linear infinite;
+  pointer-events: none;
+  z-index: 4;
+  opacity: 0.3;
+}
+
+@keyframes staticNoise {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-1px, -1px); }
+  20% { transform: translate(1px, -1px); }
+  30% { transform: translate(-1px, 1px); }
+  40% { transform: translate(1px, 1px); }
+  50% { transform: translate(-1px, -1px); }
+  60% { transform: translate(1px, -1px); }
+  70% { transform: translate(-1px, 1px); }
+  80% { transform: translate(1px, 1px); }
+  90% { transform: translate(-1px, -1px); }
+}
+
+/* Эффект искажения текста */
+.text-distortion {
+  animation: textDistort 0.2s ease-in-out;
+}
+
+@keyframes textDistort {
+  0% { transform: skew(0deg); }
+  25% { transform: skew(1deg, 0deg); }
+  50% { transform: skew(-1deg, 0deg); }
+  75% { transform: skew(0.5deg, 0.5deg); }
+  100% { transform: skew(0deg); }
+}
+
+/* Эффект тряски экрана */
+.screen-shake {
+  animation: screenShake 0.5s ease-in-out;
+}
+
+@keyframes screenShake {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-2px, -2px); }
+  20% { transform: translate(2px, -2px); }
+  30% { transform: translate(-2px, 2px); }
+  40% { transform: translate(2px, 2px); }
+  50% { transform: translate(-1px, -1px); }
+  60% { transform: translate(1px, -1px); }
+  70% { transform: translate(-1px, 1px); }
+  80% { transform: translate(1px, 1px); }
+  90% { transform: translate(0, 0); }
 }
 

@@ -1,1 +1,174 @@
+/* Тематические режимы для терминала */
 
+/* Красный режим (основной) */
+.theme-red {
+  --primary-color: #ff0000;
+  --secondary-color: #ff5555;
+  --background: #000000;
+  --accent-color: #ff3333;
+  --glow-color: rgba(255, 0, 0, 0.8);
+}
+
+.theme-red body {
+  background: linear-gradient(135deg, #000000 0%, #1a0000 50%, #000000 100%);
+}
+
+.theme-red .terminal-physical {
+  border-color: var(--primary-color);
+  box-shadow: 
+    0 0 20px rgba(255, 0, 0, 0.3),
+    inset 0 0 20px rgba(255, 0, 0, 0.1);
+}
+
+/* Зеленый режим (фейковый) */
+.theme-green {
+  --primary-color: #00ff41;
+  --secondary-color: #00cc33;
+  --background: #000000;
+  --accent-color: #00ff88;
+  --glow-color: rgba(0, 255, 65, 0.8);
+}
+
+.theme-green body {
+  background: linear-gradient(135deg, #000000 0%, #001a00 50%, #000000 100%);
+}
+
+.theme-green .terminal-physical {
+  border-color: var(--primary-color);
+  box-shadow: 
+    0 0 20px rgba(0, 255, 65, 0.3),
+    inset 0 0 20px rgba(0, 255, 65, 0.1);
+}
+
+/* Синий режим (хакерский) */
+.theme-blue {
+  --primary-color: #0080ff;
+  --secondary-color: #00aaff;
+  --background: #000000;
+  --accent-color: #00ccff;
+  --glow-color: rgba(0, 128, 255, 0.8);
+}
+
+.theme-blue body {
+  background: linear-gradient(135deg, #000000 0%, #00001a 50%, #000000 100%);
+}
+
+.theme-blue .terminal-physical {
+  border-color: var(--primary-color);
+  box-shadow: 
+    0 0 20px rgba(0, 128, 255, 0.3),
+    inset 0 0 20px rgba(0, 128, 255, 0.1);
+}
+
+/* Фиолетовый режим (мистический) */
+.theme-purple {
+  --primary-color: #8000ff;
+  --secondary-color: #aa00ff;
+  --background: #000000;
+  --accent-color: #cc00ff;
+  --glow-color: rgba(128, 0, 255, 0.8);
+}
+
+.theme-purple body {
+  background: linear-gradient(135deg, #000000 0%, #1a001a 50%, #000000 100%);
+}
+
+.theme-purple .terminal-physical {
+  border-color: var(--primary-color);
+  box-shadow: 
+    0 0 20px rgba(128, 0, 255, 0.3),
+    inset 0 0 20px rgba(128, 0, 255, 0.1);
+}
+
+/* Оранжевый режим (предупреждение) */
+.theme-orange {
+  --primary-color: #ff8000;
+  --secondary-color: #ffaa00;
+  --background: #000000;
+  --accent-color: #ffcc00;
+  --glow-color: rgba(255, 128, 0, 0.8);
+}
+
+.theme-orange body {
+  background: linear-gradient(135deg, #000000 0%, #1a0a00 50%, #000000 100%);
+}
+
+.theme-orange .terminal-physical {
+  border-color: var(--primary-color);
+  box-shadow: 
+    0 0 20px rgba(255, 128, 0, 0.3),
+    inset 0 0 20px rgba(255, 128, 0, 0.1);
+}
+
+/* Белый режим (классический) */
+.theme-white {
+  --primary-color: #ffffff;
+  --secondary-color: #cccccc;
+  --background: #000000;
+  --accent-color: #ffffff;
+  --glow-color: rgba(255, 255, 255, 0.8);
+}
+
+.theme-white body {
+  background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%);
+}
+
+.theme-white .terminal-physical {
+  border-color: var(--primary-color);
+  box-shadow: 
+    0 0 20px rgba(255, 255, 255, 0.3),
+    inset 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+/* Эффект перехода между темами */
+.theme-transition {
+  transition: all 0.5s ease-in-out;
+}
+
+/* Анимация смены темы */
+@keyframes themeSwitch {
+  0% { opacity: 1; }
+  50% { opacity: 0.3; }
+  100% { opacity: 1; }
+}
+
+.theme-switching {
+  animation: themeSwitch 0.5s ease-in-out;
+}
+
+/* Специальные эффекты для каждой темы */
+.theme-red .static-overlay {
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(255, 0, 0, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(255, 0, 0, 0.05) 0%, transparent 50%);
+}
+
+.theme-green .static-overlay {
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(0, 255, 65, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(0, 255, 65, 0.05) 0%, transparent 50%);
+}
+
+.theme-blue .static-overlay {
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(0, 128, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(0, 128, 255, 0.05) 0%, transparent 50%);
+}
+
+.theme-purple .static-overlay {
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(128, 0, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(128, 0, 255, 0.05) 0%, transparent 50%);
+}
+
+.theme-orange .static-overlay {
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(255, 128, 0, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(255, 128, 0, 0.05) 0%, transparent 50%);
+}
+
+.theme-white .static-overlay {
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+}
